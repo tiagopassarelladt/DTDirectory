@@ -1,0 +1,42 @@
+unit Unit5;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, DTDirectory;
+
+type
+  TForm5 = class(TForm)
+    Edit1: TEdit;
+    Label1: TLabel;
+    Memo1: TMemo;
+    DTDirectory1: TDTDirectory;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+  private
+    procedure RefreshView(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  Form5: TForm5;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm5.Button1Click(Sender: TObject);
+begin
+        DTDirectory1.Directory := Edit1.Text;
+        DTDirectory1.Active    := true;
+        Memo1.Lines.Clear;
+end;
+
+procedure TForm5.RefreshView(Sender: TObject);
+begin
+
+end;
+
+end.

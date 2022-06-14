@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{9F5A3134-137D-4825-8B27-63150BEF2B41}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="DirectoryHook.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demo\Demo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="DirectoryHook">
+        <MSBuild Projects="DirectoryHook.dproj"/>
+    </Target>
+    <Target Name="DirectoryHook:Clean">
+        <MSBuild Projects="DirectoryHook.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DirectoryHook:Make">
+        <MSBuild Projects="DirectoryHook.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Demo">
+        <MSBuild Projects="Demo\Demo.dproj"/>
+    </Target>
+    <Target Name="Demo:Clean">
+        <MSBuild Projects="Demo\Demo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Demo:Make">
+        <MSBuild Projects="Demo\Demo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="DirectoryHook;Demo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="DirectoryHook:Clean;Demo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="DirectoryHook:Make;Demo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

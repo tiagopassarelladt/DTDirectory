@@ -1,0 +1,94 @@
+unit Unit5;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, DTDirectory;
+
+type
+  TForm5 = class(TForm)
+    Edit1: TEdit;
+    Label1: TLabel;
+    Memo1: TMemo;
+    DTDirectory1: TDTDirectory;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+  private
+    procedure RefreshView(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  Form5: TForm5;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm5.Button1Click(Sender: TObject);
+begin
+        DTDirectory1.Directory := Edit1.Text;
+        DTDirectory1.OnChange  := RefreshView;
+        DTDirectory1.Active    := true;
+        Memo1.Lines.Clear;
+end;
+
+procedure TForm5.RefreshView(Sender: TObject);
+var
+  sr: TSearchRec;
+  searchResult: integer;
+  lvi: TListitem;
+  attr: string;
+begin
+  //whenever there's a change in the selected folder ... update the listview
+  ListView1.items.clear;
+  screen.Cursor := crHourglass;
+  ListView1.Items.BeginUpdate;
+  try
+    //add the parent folder ...
+    lvi := ListView1.Items.Add;
+    lvi.Caption := '..';
+    lvi.Data := pointer(-2); //Data simply used to sort folders before files
+    lvi.ImageIndex := 2;
+    //add any other files or folders ...
+    searchResult := FindFirst(DirectoryWatch.Directory+'*.*',faAnyFile,sr);
+    while searchResult = 0 do
+    begin
+      if sr.Name[1] <> '.' then
+      begin
+        lvi := ListView1.Items.Add;
+        if sr.Attr and FILE_ATTRIBUTE_DIRECTORY > 0 then lvi.Data := pointer(-1);
+        lvi.Caption := sr.Name;
+        if lvi.Data <> nil then //a directory
+          lvi.SubItems.Add('') else
+          lvi.SubItems.Add(format('%1.0n Kb',[sr.Size/1024]));
+        if sr.Time = 0 then
+          lvi.SubItems.Add('') else
+          lvi.SubItems.Add(formatdatetime(ShortDateFormat + '  ' +
+            ShortTimeFormat, FileDateToDateTime(sr.Time)));
+        if lvi.Data <> nil then
+          lvi.ImageIndex := 1 else
+          lvi.ImageIndex := 0;
+        if sr.Attr and FILE_ATTRIBUTE_READONLY > 0 then
+          attr := 'R' else attr := '';
+        if sr.Attr and FILE_ATTRIBUTE_ARCHIVE > 0 then
+          attr := attr + 'A';
+        if sr.Attr and FILE_ATTRIBUTE_SYSTEM > 0 then
+          attr := attr + 'S';
+        if sr.Attr and FILE_ATTRIBUTE_HIDDEN > 0 then
+          attr := attr + 'H';
+        lvi.SubItems.Add(attr);
+      end;
+      searchResult := FindNext(sr);
+    end;
+    findClose(sr);
+  finally
+    ListView1.Items.EndUpdate;
+    screen.Cursor := crDefault;
+  end;
+  Caption := 'Exploring - ' + DirectoryWatch.Directory;
+end;
+
+end.

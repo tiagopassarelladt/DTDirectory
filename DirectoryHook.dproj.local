@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/06/14 07:56:45.000.210,=rtl.dcp</Transaction>
+    <Transaction>2022/06/14 07:57:01.000.490,C:\Users\Tiago Passarella\Documents\Embarcadero\Studio\Projects\Package1.dproj=C:\Users\Tiago Passarella\Documents\Embarcadero\Studio\Projects\DirectoryHook.dproj</Transaction>
+    <Transaction>2022/06/14 07:59:09.000.004,=D:\Dropbox\Componentes\DTDirectory\DTDirectory.pas</Transaction>
+    <Transaction>2022/06/14 07:59:13.000.832,C:\Users\Tiago Passarella\Documents\Embarcadero\Studio\Projects\DirectoryHook.dproj=D:\Dropbox\Componentes\DTDirectory\DirectoryHook.dproj</Transaction>
+    <Transaction>2022/06/14 08:06:02.000.294,=vcl.dcp</Transaction>
+  </Transactions>
+</BorlandProject>

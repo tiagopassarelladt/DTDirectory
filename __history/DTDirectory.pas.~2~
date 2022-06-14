@@ -1,0 +1,36 @@
+unit DTDirectory;
+
+interface
+
+uses
+  System.SysUtils, System.Classes,
+  Windows, Messages, vcl.Forms, Classes;
+
+type
+  TNotifyFilters = set of (nfFilename, nfDirname, nfAttrib,
+    nfSize, nfLastWrite, nfSecurity);
+
+  TWatchThread = class;             //forward declaration
+
+type
+  TDTDirectoy = class(TComponent)
+  private
+    { Private declarations }
+  protected
+    { Protected declarations }
+  public
+    { Public declarations }
+  published
+    { Published declarations }
+  end;
+
+procedure Register;
+
+implementation
+
+procedure Register;
+begin
+  RegisterComponents('DT Inovacao', [TDTDirectoy]);
+end;
+
+end.

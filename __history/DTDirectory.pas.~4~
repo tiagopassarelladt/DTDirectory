@@ -1,0 +1,70 @@
+unit DTDirectory;
+
+interface
+
+uses
+  System.SysUtils, System.Classes,
+  Windows, Messages, vcl.Forms, Classes;
+
+type
+  TNotifyFilters = set of (nfFilename, nfDirname, nfAttrib,
+    nfSize, nfLastWrite, nfSecurity);
+
+  TWatchThread = class;             //forward declaration
+
+type
+  TDTDirectoy = class(TComponent)
+  private
+    fDirectory: string;
+    fWatchSubDirs: boolean;
+    fNotifyFilters: TNotifyFilters;
+    fOnChangeEvent: TNotifyEvent;
+    fActive: boolean;
+    procedure SetActive(const Value: boolean);
+    procedure SetDirectory(const Value: string);
+    procedure SetNotifyFilters(const Value: TNotifyFilters);
+    procedure SetWatchSubDirs(const Value: boolean);
+  protected
+
+  public
+
+  published
+    property Directory: string              read fDirectory     write SetDirectory;
+    property NotifyFilters: TNotifyFilters  read fNotifyFilters write SetNotifyFilters;
+    property WatchSubDirs: boolean          read fWatchSubDirs  write SetWatchSubDirs;
+    property Active: boolean                read fActive        write SetActive;
+    property OnChange: TNotifyEvent         read fOnChangeEvent write fOnChangeEvent;
+  end;
+
+procedure Register;
+
+implementation
+
+procedure Register;
+begin
+  RegisterComponents('DT Inovacao', [TDTDirectoy]);
+end;
+
+{ TDTDirectoy }
+
+procedure TDTDirectoy.SetActive(const Value: boolean);
+begin
+  fActive := Value;
+end;
+
+procedure TDTDirectoy.SetDirectory(const Value: string);
+begin
+  fDirectory := Value;
+end;
+
+procedure TDTDirectoy.SetNotifyFilters(const Value: TNotifyFilters);
+begin
+  fNotifyFilters := Value;
+end;
+
+procedure TDTDirectoy.SetWatchSubDirs(const Value: boolean);
+begin
+  fWatchSubDirs := Value;
+end;
+
+end.
